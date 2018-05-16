@@ -36,7 +36,7 @@ class SessionController extends ControllerBase
       $session->setPassword($this->createHash($data["password"]));
 
     // Generate the access token and assign it to the session
-    $token = bin2hex(random_bytes(16));
+    $token = bin2hex(random_bytes(8));
     $session->setToken($token);
       
     $session->setLastAction(new DateTime());
@@ -55,9 +55,8 @@ class SessionController extends ControllerBase
   {
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "PUT")
-    { 
-      $data = $this->jsonInput();        
-      return $this->addMember($sessionId, $data["name"]);
+    {           
+      return $this->addMember($sessionId);
     }
     if ($method == "DELETE")
     {
@@ -66,9 +65,21 @@ class SessionController extends ControllerBase
   }
   
   // Add a member with this name to the session
-  private function addMember($id, $name)
+  private function addMember($id)
   {   
+    $data = $this->jsonInput();
+    $name = $data["name"];
+    
     $session = $this->getSession($id);
+
+    // Check if either password or token was passed
+    $token = $_GET["token"];
+    if(isset($token) && $token == $session->getToken() || isset($data["password"])) {
+      $tokenKey = $this->tokenKey($id);
+      setcookie($tokenKey, $session->getToken(), time()+60*60*24*30);
+    } else {
+      return null;
+    }
     
     // Check for existing member
     foreach($session->getMembers() as $candidate)
@@ -90,10 +101,6 @@ class SessionController extends ControllerBase
         
       $this->saveAll([$member, $session]);
     }
-    
-    // Store name in cookie if not done yet
-    // if(!isset($_COOKIE['scrum_member_name']))
-    //   setcookie('scrum_member_name', $name); European privacy law
     
     $result = new stdClass();
     $result->sessionId = $id;
