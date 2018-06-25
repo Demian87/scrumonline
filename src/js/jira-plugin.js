@@ -7,7 +7,7 @@ scrum.sources.push({
   position: 3,
   view: "templates/jira_source.html",
   feedback: false,
-  jql: 'issuetype=story and status=backlog',
+  jql: 'issuetype=Epic',
   // Feedback call for completed poll
   completed: function(result) {
   },
@@ -41,7 +41,13 @@ scrum.sources.push({
         if (!data || !data.issues) {
           self.error = 'Can\'t load Jira issues, check configuration';
         } else {
-          self.issues = response.data.issues;
+          var converter = new showdown.Converter();
+
+          self.issues = response.data.issues.map(issue => {
+            const newIss = { ...issue };
+            newIss.fields.description = converter.makeHtml(J2M.toM((issue.fields.description != null) ? issue.fields.description : ''));
+            return newIss;
+          });
           self.issue = self.issues[0];
           self.loaded = true;
         }

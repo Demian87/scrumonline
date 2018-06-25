@@ -303,8 +303,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Starting a new poll
   var self = this;
-  this.startPoll = function (topic) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic }).then(function(response) {
+  this.startPoll = function (topic, description) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description }).then(function(response) {
       var data = response.data;
 
       // Reset our GUI
@@ -416,6 +416,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.votable = false;
   this.leaving = false;
   this.topic = '';
+  this.description = '';
   this.cards = [];
 
   // Self reference for callbacks
@@ -500,6 +501,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       if(self.topic !== result.topic || (!self.votable && result.votable)) {
         self.reset();
         self.topic = result.topic;
+        self.description = result.description;
       }
       
       self.votable = result.votable;

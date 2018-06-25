@@ -28,6 +28,8 @@ foreach($templates as $index=>$template)
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
   <script src="/js/modernizr-2.8.3.min.js"></script>
+  <script src="/js/J2M.js"></script>
+  <script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
   
   <!-- Style sheets -->
   <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -44,7 +46,7 @@ foreach($templates as $index=>$template)
 <!--Github Fork Badge -->
 <div class="github-fork-ribbon-wrapper hidden-xs">
   <div class="github-fork-ribbon">
-    <a target="_blank" href="https://github.com/Toxantron/scrumonline">Fork me on GitHub</a>
+    <a target="_blank" href="https://github.com/Demian87/scrumonline">Fork me on GitHub</a>
   </div>
 </div>
 
