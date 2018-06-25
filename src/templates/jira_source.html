@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.key + ' ' + master.current.issue.fields.summary, master.current.issue.fields.description)" ga-track-event="master.current.event">Start</button>
+      <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.key + ' ' + master.current.issue.fields.summary, master.current.issue.fields.description, master.current.base_url + '/browse/' + master.current.issue.key)" ga-track-event="master.current.event">Start</button>
     </div>
   </div>
 </div>

@@ -4,14 +4,14 @@
 var scrum = {  
   // Ticketing sources
   sources: [ 
-    { 
+    /*{ 
       name:'Default', 
       position: 1, 
       feedback: false,
       topic: '',
       event: ['poll', 'start', 'Default'],
       view: 'default_source.html'  
-    }, 
+    },*/ 
     { 
       name: '+', 
       position: 99, 
@@ -303,8 +303,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Starting a new poll
   var self = this;
-  this.startPoll = function (topic, description) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description }).then(function(response) {
+  this.startPoll = function (topic, description, url) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description, url:url }).then(function(response) {
       var data = response.data;
 
       // Reset our GUI
@@ -417,6 +417,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.leaving = false;
   this.topic = '';
   this.description = '';
+  this.url = '';
   this.cards = [];
 
   // Self reference for callbacks
@@ -502,6 +503,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
         self.reset();
         self.topic = result.topic;
         self.description = result.description;
+        self.url = result.url;
       }
       
       self.votable = result.votable;

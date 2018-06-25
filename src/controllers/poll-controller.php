@@ -141,6 +141,7 @@ class PollController extends ControllerBase
     {
       $response->topic = "";
       $response->description = "";
+      $response->url = "";
       $response->flipped = false;
       $response->consensus = false;
     }
@@ -148,6 +149,7 @@ class PollController extends ControllerBase
     {
       $response->topic = $currentPoll->getTopic();
       $response->description = $currentPoll->getDescription();
+      $response->url = $currentPoll->getUrl();
       $response->flipped = $currentPoll->getResult() >= 0;
       $response->consensus = $currentPoll->getConsensus();
 
@@ -175,7 +177,7 @@ class PollController extends ControllerBase
     if ($method == "POST")
     {
       $data = $this->jsonInput();        
-      $this->startPoll($sessionId, $data["topic"], $data["description"]);
+      $this->startPoll($sessionId, $data["topic"], $data["description"], $data["url"]);
       return null;
     }
 
@@ -197,12 +199,14 @@ class PollController extends ControllerBase
     {
         $result->topic = "No topic";
         $result->description = "";
+        $result->url = "";
         $result->votable = false;
     }
     else
     {
         $result->topic = $currentPoll->getTopic();
         $result->description = $currentPoll->getDescription();
+        $result->url = $currentPoll->getUrl();
         $result->votable = $currentPoll->getResult() < 0;
     }
 
@@ -210,7 +214,7 @@ class PollController extends ControllerBase
   }
 
   // Start a new poll in the session
-  private function startPoll($sessionId, $topic, $description)
+  private function startPoll($sessionId, $topic, $description, $url)
   {
     $session = $this->getSession($sessionId);
       
@@ -218,7 +222,7 @@ class PollController extends ControllerBase
     $poll = new Poll();
     $poll->setTopic($topic);
     $poll->setDescription($description);
-    //$poll->description = $description;
+    $poll->setUrl($url);
     $poll->setSession($session);   
     $poll->setResult(-1);   
     

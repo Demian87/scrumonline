@@ -6,7 +6,7 @@ include __DIR__ . "/../config.php";
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="row">
-      <h2 class="col-xs-10" ng-bind="member.topic"></h2>
+      <a ng-href="{{member.url}}"><h2 class="col-xs-10" ng-bind="member.topic"></h2></a>
       <div class="col-xs-2">
         <div class="leave remove selectable" ng-click="member.leave()">
           <span class="glyphicon glyphicon-remove"></span>
