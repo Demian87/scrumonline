@@ -366,7 +366,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
 
       // Session was not modified
       if (result.unchanged) {
-        scrum.pollingScale.scale(300, pollVotes);
+        scrum.pollingScale.scale(600, pollVotes);
         return;
       }
       
@@ -392,10 +392,10 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       }
       
       scrum.pollingScale.success();
-      scrum.pollingScale.scale(400, pollVotes);
+      scrum.pollingScale.scale(600, pollVotes);
     }, function(){
       scrum.pollingScale.failed();
-      scrum.pollingScale.scale(400, pollVotes);
+      scrum.pollingScale.scale(600, pollVotes);
     });
   }
   
